@@ -46,4 +46,11 @@ class Robot_FW():
                                         self.joint3,theta_3,sim.simx_opmode_oneshot)
 		sim.simxSetJointTargetPosition(self.clientID, 
                                        self.joint4,theta_4,sim.simx_opmode_oneshot)
-		sim.simxPauseCommunication(self.clientID,False)		
+		sim.simxPauseCommunication(self.clientID,False)	
+	def open_grip(self,x):
+		if x :
+			sim.simxSetJointTargetVelocity(self.clientID,self.gjoint2,-0.04,sim.simx_opmode_oneshot)
+		else:
+			sim.simxSetJointTargetVelocity(self.clientID,self.gjoint2,0.04,sim.simx_opmode_oneshot)
+		returnCode,position=sim.simxGetJointPosition(self.clientID,self.gjoint2,sim.simx_opmode_streaming)
+		sim.simxSetJointTargetPosition(self.clientID,self.gjoint1,position*-0.5,sim.simx_opmode_oneshot)
